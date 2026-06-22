@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>إلى حب عمري ❤️</title>
+
+<!-- خطوط عربية فاخرة من Google Fonts (يتطلب اتصال بالإنترنت — في حال عدم توافر الإنترنت سيتم استخدام خطوط النظام البديلة تلقائياً) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1) ROOT VARIABLES — نظام الألوان والخطوط (Design Tokens)
+   ============================================================ */
+:root{
+  --noir:#150509;
+  --wine:#350d20;
+  --velvet:#5c1130;
+  --rosegold:#d9a3a0;
+  --rosegold-deep:#c98a87;
+  --gold:#f0c987;
+  --gold-bright:#ffe1a8;
+  --blush:#ffd9e8;
+  --crimson:#e6395a;
+  --crimson-deep:#b5263f;
+  --ivory:#fff6f0;
+  --glass-bg:rgba(255,246,240,0.06);
+  --glass-border:rgba(240,201,135,0.35);
+  --font-display:'Aref Ruqaa','Amiri',serif;
+  --font-body:'Tajawal','Segoe UI',Tahoma,Arial,sans-serif;
+  --font-script:'Playfair Display',Georgia,serif;
+}
+
+/* ============================================================
+   2) RESET & BASE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body
+{background: url("ro2a.jpg") center center / cover no-repeat fixed;
+  font-family:var(--font-body);
+  color:var(--ivory);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body.no-scroll{overflow:hidden;height:100vh;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--crimson);color:var(--ivory);}
+
+/* شريط تمرير فاخر */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--noir);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--crimson));border-radius:10px;}
+
+/* ============================================================
+   3) خلفيات متحركة — النجوم + القلوب العائمة
+   ============================================================ */
+#stars-canvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+#ambient-hearts{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:1;pointer-events:none;overflow:hidden;
+}
+.floating-heart{
+  position:absolute;
+  bottom:-60px;
+  font-size:18px;
+  opacity:0;
+  filter:drop-shadow(0 0 6px currentColor);
+  animation-name:floatUp;
+  animation-timing-function:ease-in;
+  will-change:transform,opacity;
+}
+@keyframes floatUp{
+  0%{transform:translate(0,0) rotate(0deg) scale(0.8);opacity:0;}
+  10%{opacity:0.85;}
+  50%{transform:translate(var(--drift,20px),-55vh) rotate(180deg) scale(1.05);}
+  90%{opacity:0.6;}
+  100%{transform:translate(calc(var(--drift,20px)*2),-115vh) rotate(360deg) scale(0.9);opacity:0;}
+}
+
+/* حاوية "مطر القلوب" — تستخدم عند الضغط على الزر السحري */
+#heart-rain{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:99;pointer-events:none;overflow:hidden;
+}
+.rain-heart{
+  position:absolute;
+  top:-40px;
+  filter:drop-shadow(0 0 8px currentColor);
+  animation-name:rainFall;
+  animation-timing-function:cubic-bezier(.4,.1,.6,.9);
+  will-change:transform,opacity;
+}
+@keyframes rainFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:0;}
+  8%{opacity:1;}
+  100%{transform:translateY(110vh) rotate(380deg);opacity:0.15;}
+}
+
+/* ============================================================
+   4) شاشة التحميل (Loading Screen)
+   ============================================================ */
+#loading-screen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  background:radial-gradient(ellipse at 50% 40%, var(--wine) 0%, var(--noir) 75%);
+  transition:opacity 1.1s ease, visibility 1.1s ease, transform 1.1s ease;
+}
+#loading-screen.hide{
+  opacity:0;visibility:hidden;transform:scale(1.06);
+  pointer-events:none;
+}
+.loader-heart{
+  width:90px;height:90px;position:relative;
+  filter:drop-shadow(0 0 25px var(--crimson)) drop-shadow(0 0 45px var(--gold));
+  animation:loaderPulse 1.4s ease-in-out infinite;
+}
+@keyframes loaderPulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.14);}
+}
+.loader-text{
+  font-family:var(--font-display);
+  font-size:clamp(20px,5vw,30px);
+  color:var(--ivory);
+  text-align:center;
+  letter-spacing:1px;
+  opacity:0;
+  animation:fadeInText 1.4s ease forwards 0.5s;
+  padding:0 20px;
+  text-shadow:0 0 20px rgba(240,201,135,0.5);
+}
+@keyframes fadeInText{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.loader-bar-track{
+  width:200px;height:3px;border-radius:6px;
+  background:rgba(255,255,255,0.12);overflow:hidden;
+}
+.loader-bar-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--crimson),var(--gold));
+  border-radius:6px;
+  animation:loaderFill 2.8s ease forwards;
+}
+@keyframes loaderFill{ to{width:100%;} }
+
+/* ============================================================
+   5) أدوات عامة — كروت زجاجية / عناوين / فواصل
+   ============================================================ */
+.section{
+  position:relative;z-index:2;
+  max-width:1100px;margin:0 auto;
+  padding:90px 24px;
+}
+.glass-card{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.35), inset 0 0 40px rgba(255,255,255,0.02);
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(28px,6vw,46px);
+  text-align:center;
+  color:var(--ivory);
+  margin-bottom:14px;
+  text-shadow:0 0 25px rgba(240,201,135,0.45);
+  position:relative;
+}
+.section-sub{
+  text-align:center;
+  color:var(--rosegold);
+  font-weight:300;
+  font-size:clamp(13px,2vw,16px);
+  margin-bottom:46px;
+  letter-spacing:0.5px;
+}
+.ornament{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin:0 auto 50px;width:fit-content;
+}
+.ornament span{
+  display:block;width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.ornament .heart-glyph{
+  font-size:14px;color:var(--crimson);
+  filter:drop-shadow(0 0 6px var(--crimson));
+}
+
+/* ظهور تدريجي عند التمرير */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.9s ease, transform 0.9s ease;
+  transition-delay:calc(var(--i,0) * 90ms);
+}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+}
+
+/* ============================================================
+   6) HERO SECTION
+   ============================================================ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;position:relative;z-index:2;
+  padding:40px 20px;
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(36px,9vw,80px);
+  background:linear-gradient(95deg,var(--gold-bright),var(--rosegold) 35%,var(--crimson) 70%,var(--gold) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 50px rgba(240,201,135,0.25);
+  opacity:0;animation:heroFadeIn 1.4s ease forwards 0.3s;
+  line-height:1.25;
+}
+.hero-heart-wrap{
+  margin:18px 0;opacity:0;animation:heroFadeIn 1.4s ease forwards 0.7s;
+}
+.hero-heart{
+  width:80px;height:80px;
+  filter:drop-shadow(0 0 18px var(--crimson)) drop-shadow(0 0 36px var(--gold));
+  animation:heartbeat 1.8s ease-in-out infinite;
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  15%{transform:scale(1.18);}
+  30%{transform:scale(0.96);}
+  45%{transform:scale(1.1);}
+  60%{transform:scale(1);}
+}
+.hero-sub{
+  font-size:clamp(15px,2.6vw,22px);
+  color:var(--ivory);
+  font-weight:300;
+  max-width:640px;
+  line-height:1.9;
+  opacity:0;animation:heroFadeIn 1.4s ease forwards 1.1s;
+}
+@keyframes heroFadeIn{
+  from{opacity:0;transform:translateY(26px) scale(0.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+.scroll-hint{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  font-size:12px;color:var(--rosegold);opacity:0;
+  animation:heroFadeIn 1.2s ease forwards 1.8s, bob 2.2s ease-in-out infinite 2s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
+
+/* ============================================================
+   7) PHOTO GALLERY
+   ============================================================ */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,160px);
+  gap:16px;
+}
+.photo-frame{
+  position:relative;border-radius:18px;overflow:hidden;
+  border:1px solid var(--glass-border);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  transition:transform 0.5s ease, box-shadow 0.5s ease;
+}
+.photo-frame.main{grid-column:span 2;grid-row:span 2;}
+.photo-frame img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.7s ease, filter 0.7s ease;
+  filter:saturate(1.05) brightness(0.95);
+}
+.photo-frame::after{
+  content:'';position:absolute;inset:0;
+  border-radius:18px;
+  box-shadow:inset 0 0 0 0 transparent;
+  border:2px solid transparent;
+  transition:box-shadow 0.5s ease, border-color 0.5s ease;
+  pointer-events:none;
+}
+.photo-frame:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 40px rgba(230,57,90,0.25);}
+.photo-frame:hover img{transform:scale(1.08);filter:saturate(1.15) brightness(1.02);}
+.photo-frame:hover::after{
+  border-color:var(--gold);
+  box-shadow:0 0 28px rgba(240,201,135,0.55), inset 0 0 20px rgba(230,57,90,0.25);
+}
+.frame-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:14px 10px 10px;
+  background:linear-gradient(to top, rgba(20,5,10,0.85), transparent);
+  font-size:12px;color:var(--ivory);text-align:center;
+  opacity:0;transition:opacity 0.4s ease;
+}
+.photo-frame:hover .frame-label{opacity:1;}
+
+@media (max-width:680px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,140px);}
+  .photo-frame.main{grid-column:span 2;grid-row:span 1;height:220px;}
+}
+
+/* ============================================================
+   8) LOVE LETTER SECTION
+   ============================================================ */
+.letter-card{
+  padding:clamp(30px,6vw,60px);
+  position:relative;
+  background:
+    linear-gradient(160deg, rgba(255,246,240,0.07), rgba(230,57,90,0.04));
+}
+.letter-card::before{
+  content:'❦';
+  position:absolute;top:18px;right:28px;
+  font-size:28px;color:var(--gold);opacity:0.6;
+}
+.letter-greeting{
+  font-family:var(--font-display);
+  font-size:clamp(20px,3.5vw,28px);
+  color:var(--gold-bright);
+  margin-bottom:22px;
+  text-align:center;
+}
+.letter-body{
+  font-size:clamp(15px,2.2vw,19px);
+  line-height:2.1;
+  color:var(--ivory);
+  min-height:260px;
+  white-space:pre-wrap;
+}
+.letter-body .type-cursor{
+  display:inline-block;width:2px;height:1em;background:var(--gold-bright);
+  margin-right:2px;vertical-align:middle;
+  animation:blinkCursor 0.9s steps(1) infinite;
+}
+@keyframes blinkCursor{50%{opacity:0;}}
+.letter-signature{
+  margin-top:30px;text-align:left;
+  font-family:var(--font-script);font-style:italic;
+  color:var(--rosegold);font-size:18px;
+}
+
+/* ============================================================
+   9) MEMORIES TIMELINE
+   ============================================================ */
+.timeline{
+  position:relative;max-width:760px;margin:0 auto;
+  padding-right:46px;
+}
+.timeline::before{
+  content:'';position:absolute;right:9px;top:6px;bottom:6px;width:3px;
+  background:linear-gradient(to bottom, var(--gold), var(--crimson), var(--gold));
+  border-radius:4px;box-shadow:0 0 14px rgba(240,201,135,0.5);
+}
+.timeline-item{position:relative;margin-bottom:42px;}
+.timeline-item:last-child{margin-bottom:0;}
+.timeline-marker{
+  position:absolute;right:-46px;top:6px;
+  width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle,var(--gold-bright),var(--crimson));
+  box-shadow:0 0 0 4px rgba(20,5,9,0.9), 0 0 16px var(--gold);
+}
+.timeline-card{padding:20px 24px;}
+.timeline-date{
+  display:inline-block;
+  font-size:12px;letter-spacing:0.5px;
+  color:var(--gold-bright);
+  background:rgba(240,201,135,0.12);
+  border:1px solid rgba(240,201,135,0.35);
+  border-radius:20px;padding:4px 14px;margin-bottom:10px;
+}
+.timeline-card h3{
+  font-family:var(--font-display);
+  font-size:clamp(18px,3vw,22px);
+  margin-bottom:8px;color:var(--ivory);
+}
+.timeline-card p{
+  font-size:14px;line-height:1.8;color:rgba(255,246,240,0.85);font-weight:300;
+}
+
+/* ============================================================
+   10) LOVE REASONS GRID
+   ============================================================ */
+.reasons-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.reason-card{
+  padding:28px 18px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  transition:transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+}
+.reason-card:hover{
+  transform:translateY(-8px);
+  border-color:var(--gold);
+  box-shadow:0 14px 34px rgba(230,57,90,0.22);
+}
+.reason-icon{
+  font-size:26px;color:var(--crimson);
+  filter:drop-shadow(0 0 8px var(--crimson));
+  animation:heartbeat 2.6s ease-in-out infinite;
+}
+.reason-text{font-size:16px;font-weight:500;color:var(--ivory);}
+
+/* ============================================================
+   11) LOVE COUNTER & FUTURE COUNTDOWN
+   ============================================================ */
+.counter-grid, .countdown-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+}
+.countdown-grid{grid-template-columns:repeat(4,1fr);}
+.time-box{
+  padding:18px 6px;text-align:center;
+}
+.time-num{
+  font-family:var(--font-display);
+  font-size:clamp(22px,5vw,38px);
+  color:var(--gold-bright);
+  text-shadow:0 0 16px rgba(240,201,135,0.5);
+  line-height:1.1;
+}
+.time-label{
+  font-size:11px;color:var(--rosegold);margin-top:6px;letter-spacing:0.5px;
+}
+@media (max-width:680px){
+  .counter-grid{grid-template-columns:repeat(3,1fr);}
+  .countdown-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ============================================================
+   12) LOVE METER
+   ============================================================ */
+.meter-wrap{padding:40px clamp(20px,6vw,60px);text-align:center;}
+.meter-value{
+  font-family:var(--font-display);
+  font-size:clamp(44px,11vw,96px);
+  background:linear-gradient(95deg,var(--crimson),var(--gold-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:22px;
+  text-shadow:0 0 40px rgba(230,57,90,0.3);
+}
+.meter-track{
+  width:100%;height:18px;border-radius:30px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid var(--glass-border);
+  overflow:hidden;position:relative;
+}
+.meter-fill{
+  height:100%;width:0%;border-radius:30px;
+  background:linear-gradient(90deg,var(--crimson),var(--gold),var(--gold-bright));
+  box-shadow:0 0 18px rgba(240,201,135,0.7);
+  position:relative;
+  transition:width 0.3s ease-out;
+}
+.meter-fill::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent,rgba(255,255,255,0.5),transparent);
+  animation:shimmer 1.6s linear infinite;
+}
+@keyframes shimmer{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+.meter-caption{margin-top:16px;font-size:13px;color:var(--rosegold);font-style:italic;}
+
+/* ============================================================
+   13) HEART BUTTON + MODAL
+   ============================================================ */
+.button-section{text-align:center;padding:70px 24px;}
+.love-btn{
+  position:relative;
+  font-family:var(--font-display);
+  font-size:clamp(17px,3vw,22px);
+  color:var(--noir);
+  background:linear-gradient(95deg,var(--gold-bright),var(--rosegold) 50%,var(--crimson));
+  padding:20px 50px;border-radius:60px;
+  box-shadow:0 0 30px rgba(230,57,90,0.55), 0 0 60px rgba(240,201,135,0.3);
+  animation:btnPulse 2.4s ease-in-out infinite;
+  transition:transform 0.3s ease;
+}
+.love-btn:hover{transform:scale(1.07);}
+.love-btn:active{transform:scale(0.96);}
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 30px rgba(230,57,90,0.55),0 0 60px rgba(240,201,135,0.3);}
+  50%{box-shadow:0 0 50px rgba(230,57,90,0.85),0 0 90px rgba(240,201,135,0.55);}
+}
+
+#love-modal{
+  position:fixed;inset:0;z-index:200;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(10,3,6,0.78);backdrop-filter:blur(6px);
+  padding:20px;
+  opacity:0;transition:opacity 0.4s ease;
+}
+#love-modal.show{display:flex;opacity:1;}
+.modal-card{
+  max-width:480px;width:100%;
+  padding:clamp(30px,6vw,50px) clamp(24px,5vw,40px);
+  text-align:center;position:relative;
+  transform:scale(0.8) translateY(30px);
+  transition:transform 0.5s cubic-bezier(.2,.9,.3,1.3);
+  background:linear-gradient(160deg, rgba(255,246,240,0.1), rgba(230,57,90,0.06));
+}
+#love-modal.show .modal-card{transform:scale(1) translateY(0);}
+.modal-heart{
+  width:70px;height:70px;margin:0 auto 18px;
+  filter:drop-shadow(0 0 20px var(--crimson)) drop-shadow(0 0 40px var(--gold));
+  animation:heartbeat 1.1s ease-in-out infinite;
+}
+.modal-text{
+  font-family:var(--font-display);
+  font-size:clamp(20px,4vw,28px);
+  color:var(--ivory);line-height:1.6;
+  text-shadow:0 0 20px rgba(230,57,90,0.4);
+}
+.modal-close{
+  position:absolute;top:14px;left:14px;
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.08);border:1px solid var(--glass-border);
+  font-size:16px;color:var(--ivory);transition:background 0.3s ease;
+}
+.modal-close:hover{background:rgba(230,57,90,0.4);}
+
+/* ============================================================
+   14) SECRET SECTION
+   ============================================================ */
+.secret-section{text-align:center;}
+.secret-trigger-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.secret-hint{font-size:13px;color:var(--rosegold);font-style:italic;}
+.secret-heart-btn{
+  font-size:42px;color:var(--crimson);
+  filter:drop-shadow(0 0 14px var(--crimson));
+  transition:transform 0.18s ease;
+  background:none;
+}
+.secret-heart-btn:active{transform:scale(0.8);}
+.secret-progress{display:flex;gap:6px;margin-top:6px;}
+.secret-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,0.18);
+  transition:background 0.3s ease, box-shadow 0.3s ease;
+}
+.secret-dot.filled{background:var(--gold-bright);box-shadow:0 0 8px var(--gold);}
+.secret-message{
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height 0.7s ease, opacity 0.7s ease, margin 0.7s ease;
+  margin-top:0;
+}
+.secret-message.revealed{
+  max-height:400px;opacity:1;margin-top:30px;
+}
+.secret-message-inner{padding:30px;}
+.secret-message-inner p{
+  font-family:var(--font-display);
+  font-size:clamp(17px,3vw,22px);
+  line-height:1.9;color:var(--gold-bright);
+}
+
+/* ============================================================
+   15) MUSIC PLAYER (Floating)
+   ============================================================ */
+#music-player{
+  position:fixed;bottom:18px;left:18px;z-index:60;
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;border-radius:50px;
+  background:rgba(20,5,9,0.65);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  max-width:min(320px,calc(100vw - 36px));
+}
+.player-icon{
+  font-size:18px;flex-shrink:0;
+  animation:heartbeat 2.4s ease-in-out infinite;
+}
+.player-toggle{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold-bright),var(--crimson));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--noir);
+}
+.player-progress-wrap{flex:1;min-width:60px;}
+.player-progress-track{
+  width:100%;height:5px;border-radius:6px;background:rgba(255,255,255,0.15);
+  position:relative;cursor:pointer;
+}
+.player-progress-fill{
+  height:100%;width:0%;border-radius:6px;
+  background:linear-gradient(90deg,var(--crimson),var(--gold-bright));
+}
+.player-volume{
+  width:55px;flex-shrink:0;accent-color:var(--gold);
+}
+@media (max-width:520px){
+  .player-volume{display:none;}
+}
+
+
+/* ============================================================
+   16) FOOTER
+   ============================================================ */
+footer{
+  position:relative;z-index:2;
+  text-align:center;padding:60px 20px 110px;
+}
+.footer-line{
+  font-family:var(--font-display);
+  font-size:clamp(20px,4vw,28px);
+  color:var(--gold-bright);
+  text-shadow:0 0 20px rgba(240,201,135,0.4);
+  margin-bottom:10px;
+}
+.footer-sub{
+  font-family:var(--font-script);
+  font-style:italic;
+  font-size:clamp(16px,3vw,20px);
+  color:var(--rosegold);
+  letter-spacing:1px;
+}
+.footer-heart{margin-top:18px;font-size:18px;color:var(--crimson);animation:heartbeat 2s ease-in-out infinite;display:inline-block;}
+
+/* ============================================================
+   17) تحسينات إضافية للتجاوب مع الموبايل (Responsive / Mobile)
+   ============================================================ */
+
+/* حماية أي نص طويل (حتى لو غيّرتي العنوان أو الرسالة) من تخطي حدود الشاشة */
+.hero-title, .hero-sub, .section-title, .section-sub,
+.letter-body, .letter-greeting, .reason-text,
+.timeline-card h3, .timeline-card p, .modal-text,
+.secret-hint, .secret-message-inner p, .frame-label{
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
+
+/* ارتفاع متوافق مع متصفحات الموبايل (يمنع قفزة شريط العنوان في آيفون/أندرويد) */
+@supports (height: 100svh){
+  .hero{ min-height:100svh; }
+}
+
+/* مسافات أنسب للشاشات المتوسطة */
+@media (max-width:900px){
+  .section{ padding:70px 20px; }
+}
+
+/* شاشات الموبايل */
+@media (max-width:680px){
+  .section{ padding:56px 16px; }
+  .section-sub{ margin-bottom:32px; }
+  .timeline{ padding-right:34px; }
+  .timeline::before{ right:7px; }
+  .timeline-marker{ right:-34px; width:16px; height:16px; }
+  .timeline-card{ padding:16px 18px; }
+  .love-btn{ padding:16px 32px; }
+  .button-section{ padding:50px 20px; }
+  .meter-wrap{ padding:30px 18px; }
+  #music-player{
+    left:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    padding:8px 12px; gap:8px;
+  }
+  .modal-card{ padding:28px 20px; }
+}
+
+/* الموبايل الصغير */
+@media (max-width:480px){
+  .gallery-grid{ gap:12px; }
+  .photo-frame{
+    aspect-ratio:16/10;
+    height: 0;
+    padding-top: calc(10 / 16 * 100%);
+    position: relative;
+  }
+  .counter-grid{ grid-template-columns:repeat(3,1fr); gap:8px; }
+  .gallery-grid{ gap:12px; }
+  .countdown-grid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+  .time-box{ padding:12px 4px; }
+  .reasons-grid{ gap:14px; }
+  .reason-card{ padding:22px 14px; }
+  .love-btn{ width:100%; padding:16px 20px; }
+  .player-progress-wrap{ min-width:40px; }
+}
+
+/* الموبايل الصغير جداً */
+@media (max-width:360px){
+  .counter-grid{ grid-template-columns:repeat(2,1fr); }
+  .hero-title{ font-size:clamp(26px,9vw,40px); }
+  #music-player{ max-width:calc(100vw - 24px); }
+
+   .gallery-grid video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:18px;
+    display:block;
+}
+
+.photo-frame{
+    overflow:hidden;
+}
+.gallery-grid video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:18px;
+    display:block;
+}
+}
+
+
+</style>
+</head>
+<body class="no-scroll">
+
+<!-- ============================================================
+     شاشة التحميل (Loading Screen)
+     ============================================================ -->
+<div id="loading-screen">
+  <svg class="loader-heart" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#e6395a" d="M16 28.5c-.4 0-.8-.15-1.1-.45C9.6 23.7 5.6 20 3.2 16.6 1 13.5 0 10.7 0 8.1 0 3.6 3.4 0 7.7 0c2.6 0 5 1.3 6.6 3.4C15.9 1.3 18.3 0 20.9 0 25.2 0 32 3.6 32 8.1c0 2.6-1 5.4-3.2 8.5-2.4 3.4-6.4 7.1-11.7 11.4-.3.3-.7.5-1.1.5Z"/>
+  </svg>
+  <div class="loader-text">فيه شخص غيّر حياتي كلها ❤️</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- خلفية النجوم المتلألئة -->
+<canvas id="stars-canvas"></canvas>
+<!-- حاوية القلوب العائمة في الخلفية -->
+<div id="ambient-hearts"></div>
+<!-- حاوية مطر القلوب (تُفعّل عند الضغط على الزر) -->
+<div id="heart-rain"></div>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+  <h1 class="hero-title">إلى حب عمري و حتته البسبوسه بتاعتي ❤️</h1>
+  <div class="hero-heart-wrap">
+    <svg class="hero-heart" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="heroHeartGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffe1a8"/>
+          <stop offset="55%" stop-color="#d9a3a0"/>
+          <stop offset="100%" stop-color="#e6395a"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#heroHeartGrad)" d="M16 28.5c-.4 0-.8-.15-1.1-.45C9.6 23.7 5.6 20 3.2 16.6 1 13.5 0 10.7 0 8.1 0 3.6 3.4 0 7.7 0c2.6 0 5 1.3 6.6 3.4C15.9 1.3 18.3 0 20.9 0 25.2 0 32 3.6 32 8.1c0 2.6-1 5.4-3.2 8.5-2.4 3.4-6.4 7.1-11.7 11.4-.3.3-.7.5-1.1.5Z"/>
+    </svg>
+  </div>
+  <p class="hero-sub">لو كان عندي ألف حياة، كنت هختارك في كل واحدة منهم</p>
+  <div class="scroll-hint">
+    <span> <H2>انزلي تحت ياقمررر
+    </H2>  </span>
+    <span>↓</span>
+  </div>
+</section>
+
+<!-- ============================================================
+
+<!-- ============================================================
+     LOVE LETTER SECTION
+     ============================================================ -->
+<section class="section" id="letter">
+  <h2 class="section-title reveal">رسالة من قلبي ليكي</h2>
+  <div class="ornament reveal"><span></span><span class="heart-glyph">❤</span><span></span></div>
+
+  <div class="glass-card letter-card reveal">
+    <div class="letter-greeting">لروحي الحبيبة...</div>
+    <!-- ✏️ نص الرسالة — عدّليه بكلامك الخاص، وستظهر الكلمة بحرف بحرف تلقائياً -->
+    <div class="letter-body" id="letter-text" data-full-text="من اللحظة اللي عرفتك فيها، حياتي اتغيرت تماماً.
+بقيت أشوف كل شيء حواليا بشكل مختلف، أحلى، وأهدى.
+ضحكتك بقت أمان قلبي، وصوتك بقى أول حاجة أتمنى أسمعها كل يوم.
+مش عارف أوصف ده ده بإحساس، بس أعرف إن مهما حصل، وجودك جنبي هو أكبر هدية ممكن أحصل عليها.
+شكراً إنك إنتي، وشكراً إنك دايماً موجودة.
+بحبك أكتر من أي كلام ممكن يوصف، وهفضل بحبك لآخر يوم في حياتي."></div>
+    <div class="letter-signature">— لك دايماً ❤️</div>
+  </div>
+</section>
+<!-- ============================================================
+     MEMORIES TIMELINE
+     ============================================================ -->
+<section class="section" id="timeline-section">
+  <h2 class="section-title reveal">أجمل ذكرياتنا</h2>
+  <p class="section-sub reveal">✏️</p>
+
+  <div class="timeline">
+    <div class="timeline-item reveal" style="--i:1">
+      <div class="timeline-marker"></div>
+      <div class="glass-card timeline-card">
+        <!-- ✏️ التاريخ والعنوان والوصف — قابلين للتعديل -->
+        <span class="timeline-date">أول لقاء</span>
+        <h3>اللحظة اللي بدأ فيها كل شيء</h3>
+        <p>أول مرة شفتك فيها، وحسيت إن حاجة في قلبي اتغيرت من غير ما أقول كلمة.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal" style="--i:2">
+      <div class="timeline-marker"></div>
+      <div class="glass-card timeline-card">
+        <span class="timeline-date">أول كلام بينا</span>
+        <h3>أول مكالمة استمرت لساعات</h3>
+        <p>اتكلمنا وكأننا نعرف بعض من سنين، والوقت طار من غير ما نحس.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal" style="--i:3">
+      <div class="glass-card timeline-card">
+        <div class="timeline-marker"></div>
+        <span class="timeline-date">أول خروجة</span>
+        <h3>يوم خرجنا سوا لأول مرة</h3>
+        <p>كل لحظة فيه كانت بسيطة بس حسيتها من أجمل أيام حياتي.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal" style="--i:4">
+      <div class="timeline-marker"></div>
+      <div class="glass-card timeline-card">
+        <span class="timeline-date">يوم اعترفنا بحبنا</span>
+        <h3>"بحبك" اللي غيّرت كل شيء</h3>
+        <p>الكلمة اللي كنت خايف أقولها، طلعت أحلى قرار اتخدته في حياتي.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal" style="--i:5">
+      <div class="timeline-marker"></div>
+      <div class="glass-card timeline-card">
+        <span class="timeline-date">النهاردة</span>
+        <h3>ولسه القصة مستمرة...</h3>
+        <p>وكل يوم بزيد حبي ليكي أكتر، وكل ذكرى جديدة بتضاف لقلبي معاكِ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOVE REASONS SECTION
+     ============================================================ -->
+<section class="section" id="reasons">
+  <h2 class="section-title reveal">ليه بحبك؟</h2>
+  <p class="section-sub reveal">أسباب كتير... ودي بس عشرة منهم</p>
+
+  <div class="reasons-grid">
+    <div class="glass-card reason-card reveal" style="--i:1"><span class="reason-icon">❤</span><span class="reason-text">ضحكتك</span></div>
+    <div class="glass-card reason-card reveal" style="--i:2"><span class="reason-icon">❤</span><span class="reason-text">اهتمامك</span></div>
+    <div class="glass-card reason-card reveal" style="--i:3"><span class="reason-icon">❤</span><span class="reason-text">طيبة قلبك</span></div>
+    <div class="glass-card reason-card reveal" style="--i:4"><span class="reason-icon">❤</span><span class="reason-text">وجودك في حياتي</span></div>
+    <div class="glass-card reason-card reveal" style="--i:5"><span class="reason-icon">❤</span><span class="reason-text">كلامك الحلو</span></div>
+    <div class="glass-card reason-card reveal" style="--i:6"><span class="reason-icon">❤</span><span class="reason-text">دعمك ليا</span></div>
+    <div class="glass-card reason-card reveal" style="--i:7"><span class="reason-icon">❤</span><span class="reason-text">روحك الجميلة</span></div>
+    <div class="glass-card reason-card reveal" style="--i:8"><span class="reason-icon">❤</span><span class="reason-text">ذكاؤنا مع بعض</span></div>
+    <div class="glass-card reason-card reveal" style="--i:9"><span class="reason-icon">❤</span><span class="reason-text">اللحظات اللي بنقضيها سوا</span></div>
+    <div class="glass-card reason-card reveal" style="--i:10"><span class="reason-icon">❤</span><span class="reason-text">إنك إنتي ❤️</span></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOVE COUNTER
+     ============================================================ -->
+<section class="section" id="counter-section">
+  <h2 class="section-title reveal">من يوم ما عرفتك</h2>
+
+  <div class="glass-card counter-grid" style="padding:24px 12px;">
+    <div class="time-box"><div class="time-num" id="c-years">0</div><div class="time-label">سنوات</div></div>
+    <div class="time-box"><div class="time-num" id="c-months">0</div><div class="time-label">أشهر</div></div>
+    <div class="time-box"><div class="time-num" id="c-days">0</div><div class="time-label">أيام</div></div>
+    <div class="time-box"><div class="time-num" id="c-hours">0</div><div class="time-label">ساعات</div></div>
+    <div class="time-box"><div class="time-num" id="c-minutes">0</div><div class="time-label">دقائق</div></div>
+    <div class="time-box"><div class="time-num" id="c-seconds">0</div><div class="time-label">ثواني</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FUTURE COUNTDOWN
+     ============================================================ -->
+<section class="section" id="countdown-section">
+  <h2 class="section-title reveal">الوقت المتبقي للقاء القادم</h2>
+\  <div class="glass-card countdown-grid" style="padding:24px 12px;">
+    <div class="time-box"><div class="time-num" id="d-days">0</div><div class="time-label">أيام</div></div>
+    <div class="time-box"><div class="time-num" id="d-hours">0</div><div class="time-label">ساعات</div></div>
+    <div class="time-box"><div class="time-num" id="d-minutes">0</div><div class="time-label">دقائق</div></div>
+    <div class="time-box"><div class="time-num" id="d-seconds">0</div><div class="time-label">ثواني</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOVE METER
+     ============================================================ -->
+<section class="section" id="meter-section">
+  <h2 class="section-title reveal">نسبة حبي ليكي</h2>
+  <div class="glass-card meter-wrap reveal">
+    <div class="meter-value" id="meter-value">0%</div>
+    <div class="meter-track"><div class="meter-fill" id="meter-fill"></div></div>
+    <div class="meter-caption">تحذير: النتيجة قد تتجاوز حدود العلم والمنطق 😄</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HEART BUTTON
+     ============================================================ -->
+<section class="button-section">
+  <button class="love-btn" id="love-btn">اضغطي هنا يا روحي ❤️</button>
+</section>
+
+<!-- نافذة منبثقة تظهر بعد الضغط على الزر -->
+<div id="love-modal">
+  <div class="glass-card modal-card">
+    <button class="modal-close" id="modal-close">✕</button>
+    <svg class="modal-heart" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#e6395a" d="M16 28.5c-.4 0-.8-.15-1.1-.45C9.6 23.7 5.6 20 3.2 16.6 1 13.5 0 10.7 0 8.1 0 3.6 3.4 0 7.7 0c2.6 0 5 1.3 6.6 3.4C15.9 1.3 18.3 0 20.9 0 25.2 0 32 3.6 32 8.1c0 2.6-1 5.4-3.2 8.5-2.4 3.4-6.4 7.1-11.7 11.4-.3.3-.7.5-1.1.5Z"/>
+    </svg>
+    <div class="modal-text">أنا بحبك أكتر مما تتخيلي ❤️</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECRET SECTION
+     ============================================================ -->
+<section class="section secret-section">
+  <h2 class="section-title reveal">سرّ صغير 🤫</h2>
+  <div class="secret-trigger-wrap reveal">
+    <p class="secret-hint">اضغطي على القلب ٥ مرات لتكتشفي سرّ مخفي...</p>
+    <button class="secret-heart-btn" id="secret-heart">❤</button>
+    <div class="secret-progress" id="secret-progress">
+      <span class="secret-dot"></span><span class="secret-dot"></span><span class="secret-dot"></span><span class="secret-dot"></span><span class="secret-dot"></span>
+    </div>
+  </div>
+
+  <div class="secret-message" id="secret-message">
+    <div class="glass-card secret-message-inner">
+      <!-- ✏️ الرسالة السرية — عدّليها كما تحبين -->
+      <p>وصلتي للسرّ 🤍 ... كنت عايز أقولك إنك مش بس حب عمري، إنتي بيتي، راحتي، وأمان قلبي. كل يوم بزيد حبي ليكي، وهفضل أحبك لآخر نفس في حياتي. أنتِ نعمة ربي ليا ❤️</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MUSIC PLAYER
+     ============================================================ -->
+<div id="music-player">
+  <span class="player-icon">🎵</span>
+  <button class="player-toggle" id="player-toggle">▶</button>
+  <div class="player-progress-wrap">
+    <div class="player-progress-track" id="player-progress-track">
+      <div class="player-progress-fill" id="player-progress-fill"></div>
+    </div>
+  </div>
+  <input type="range" class="player-volume" id="player-volume" min="0" max="1" step="0.01" value="0.6">
+  <!-- ✏️ ضعي رابط ملف الموسيقى الخاص بك في خاصية src أدناه -->
+  <audio id="bg-audio" loop preload="none">
+    <source src="07.ShababGamed.Com_Ben Edek_Asala.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-line">صُنعت بكل الحب ❤️</div>
+  <div class="footer-sub">Forever &amp; Always</div>
+  <div class="footer-heart">❤</div>
+</footer>
+
+<script>
+/* ============================================================
+   تهيئة عامة
+   ============================================================ */
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ------------------------------------------------------------
+   1) شاشة التحميل — تختفي بعد ثلاث ثوانٍ تقريباً
+   ------------------------------------------------------------ */
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    var loader = document.getElementById('loading-screen');
+    loader.classList.add('hide');
+    document.body.classList.remove('no-scroll');
+  }, 3000);
+});
+/* شبكة أمان: في حال تأخر حدث load، أخفي الشاشة بعد 5 ثوانٍ على أي حال */
+setTimeout(function () {
+  var loader = document.getElementById('loading-screen');
+  if (loader && !loader.classList.contains('hide')) {
+    loader.classList.add('hide');
+    document.body.classList.remove('no-scroll');
+  }
+}, 5000);
+
+/* ------------------------------------------------------------
+   2) خلفية النجوم المتلألئة (Canvas)
+   ------------------------------------------------------------ */
+(function initStars() {
+  var canvas = document.getElementById('stars-canvas');
+  var ctx = canvas.getContext('2d');
+  var stars = [];
+  var starCount = window.innerWidth < 600 ? 70 : 140;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function makeStars() {
+    stars = [];
+    for (var i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.4 + 0.3,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.4 + Math.random() * 0.8,
+        gold: Math.random() > 0.7
+      });
+    }
+  }
+  makeStars();
+  window.addEventListener('resize', makeStars);
+
+  var t = 0;
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var twinkle = (Math.sin(t * s.speed + s.phase) + 1) / 2; /* 0..1 */
+      var opacity = 0.15 + twinkle * 0.75;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.gold
+        ? 'rgba(240,201,135,' + opacity + ')'
+        : 'rgba(255,246,240,' + opacity + ')';
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = s.gold ? 'rgba(240,201,135,0.8)' : 'rgba(255,255,255,0.6)';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ------------------------------------------------------------
+   3) القلوب العائمة في الخلفية (Ambient floating hearts)
+   ------------------------------------------------------------ */
+(function ambientHearts() {
+  var container = document.getElementById('ambient-hearts');
+  var emojis = ['❤', '💖', '💕', '💗'];
+  var colors = ['#e6395a', '#f0c987', '#d9a3a0', '#ffd9e8'];
+
+  function spawnHeart() {
+    var heart = document.createElement('span');
+    heart.className = 'floating-heart';
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    var size = 12 + Math.random() * 22;
+    var left = Math.random() * 100;
+    var duration = 9 + Math.random() * 10;
+    var drift = (Math.random() * 120 - 60) + 'px';
+    heart.style.left = left + 'vw';
+    heart.style.fontSize = size + 'px';
+    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.setProperty('--drift', drift);
+    heart.style.animationDuration = duration + 's';
+    container.appendChild(heart);
+    setTimeout(function () {
+      if (heart.parentNode) heart.parentNode.removeChild(heart);
+    }, duration * 1000 + 200);
+  }
+
+  if (!reduceMotion) {
+    setInterval(spawnHeart, 700);
+    for (var i = 0; i < 6; i++) setTimeout(spawnHeart, i * 250);
+  }
+})();
+
+/* ------------------------------------------------------------
+   4) مطر القلوب (Heart burst) — يُستخدم عند فتح المودال
+   ------------------------------------------------------------ */
+function spawnHeartBurst(count) {
+  var container = document.getElementById('heart-rain');
+  var emojis = ['❤', '💖', '💕', '💗', '✨'];
+  var colors = ['#e6395a', '#f0c987', '#ffe1a8', '#d9a3a0', '#ffd9e8'];
+  for (var i = 0; i < count; i++) {
+    (function () {
+      var heart = document.createElement('span');
+      heart.className = 'rain-heart';
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      var size = 10 + Math.random() * 24;
+      var left = Math.random() * 100;
+      var duration = 2.2 + Math.random() * 2.2;
+      var delay = Math.random() * 1.4;
+      heart.style.left = left + 'vw';
+      heart.style.fontSize = size + 'px';
+      heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.animationDuration = duration + 's';
+      heart.style.animationDelay = delay + 's';
+      container.appendChild(heart);
+      setTimeout(function () {
+        if (heart.parentNode) heart.parentNode.removeChild(heart);
+      }, (duration + delay) * 1000 + 300);
+    })();
+  }
+}
+
+/* ------------------------------------------------------------
+   5) ظهور تدريجي عند التمرير (Scroll reveal)
+   ------------------------------------------------------------ */
+(function scrollReveal() {
+  var items = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach(function (item) { observer.observe(item); });
+})();
+
+/* ------------------------------------------------------------
+   6) تأثير الآلة الكاتبة لرسالة الحب (Typewriter)
+   ------------------------------------------------------------ */
+(function typewriterLetter() {
+  var el = document.getElementById('letter-text');
+  var fullText = el.getAttribute('data-full-text') || '';
+  var started = false;
+
+  function startTyping() {
+    if (started) return;
+    started = true;
+    var i = 0;
+    el.textContent = '';
+    var cursor = document.createElement('span');
+    cursor.className = 'type-cursor';
+
+    var speed = reduceMotion ? 0 : 28;
+    function typeStep() {
+      if (i < fullText.length) {
+        el.textContent = fullText.slice(0, i + 1);
+        el.appendChild(cursor);
+        i++;
+        setTimeout(typeStep, speed);
+      } else {
+        cursor.remove();
+      }
+    }
+    typeStep();
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        startTyping();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(el);
+})();
+
+/* ------------------------------------------------------------
+   7) عداد الحب — منذ يوم التعارف (Love counter)
+   ------------------------------------------------------------ */
+var loveStartDate = new Date('2026-05-03T00:00:00'); // ✏️ التاريخ
+
+function getElapsed(start, now) {
+  var years = now.getFullYear() - start.getFullYear();
+  var months = now.getMonth() - start.getMonth();
+  var days = now.getDate() - start.getDate();
+  var hours = now.getHours() - start.getHours();
+  var minutes = now.getMinutes() - start.getMinutes();
+  var seconds = now.getSeconds() - start.getSeconds();
+
+  if (seconds < 0) { seconds += 60; minutes--; }
+  if (minutes < 0) { minutes += 60; hours--; }
+  if (hours < 0) { hours += 24; days--; }
+  if (days < 0) {
+    var prevMonthDate = new Date(now.getFullYear(), now.getMonth(), 0);
+    days += prevMonthDate.getDate();
+    months--;
+  }
+  if (months < 0) { months += 12; years--; }
+  if (years < 0) { years = 0; months = 0; days = 0; hours = 0; minutes = 0; seconds = 0; }
+
+  return { years: years, months: months, days: days, hours: hours, minutes: minutes, seconds: seconds };
+}
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+function updateLoveCounter() {
+  var diff = getElapsed(loveStartDate, new Date());
+  document.getElementById('c-years').textContent = diff.years;
+  document.getElementById('c-months').textContent = diff.months;
+  document.getElementById('c-days').textContent = diff.days;
+  document.getElementById('c-hours').textContent = pad2(diff.hours);
+  document.getElementById('c-minutes').textContent = pad2(diff.minutes);
+  document.getElementById('c-seconds').textContent = pad2(diff.seconds);
+}
+updateLoveCounter();
+setInterval(updateLoveCounter, 1000);
+
+/* ------------------------------------------------------------
+   8) العد التنازلي للقاء القادم (Future countdown)
+   ✏️ غيّري هذا التاريخ لتاريخ اللقاء القادم
+   ------------------------------------------------------------ */
+var nextMeetingDate = new Date('2026-07-01T00:01:00'); // ✏️ عدّلي هذا التاريخ
+
+function updateCountdown() {
+  var now = new Date();
+  var diffMs = nextMeetingDate - now;
+  if (diffMs < 0) diffMs = 0;
+
+  var totalSeconds = Math.floor(diffMs / 1000);
+  var days = Math.floor(totalSeconds / 86400);
+  var hours = Math.floor((totalSeconds % 86400) / 3600);
+  var minutes = Math.floor((totalSeconds % 3600) / 60);
+  var seconds = totalSeconds % 60;
+
+  document.getElementById('d-days').textContent = days;
+  document.getElementById('d-hours').textContent = pad2(hours);
+  document.getElementById('d-minutes').textContent = pad2(minutes);
+  document.getElementById('d-seconds').textContent = pad2(seconds);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ------------------------------------------------------------
+   9) مقياس الحب الكوميدي (Love meter) — من 0% إلى 1,000,000%
+   ------------------------------------------------------------ */
+(function loveMeter() {
+  var valueEl = document.getElementById('meter-value');
+  var fillEl = document.getElementById('meter-fill');
+  var target = 1000000;
+  var played = false;
+
+  function animateMeter() {
+    if (played) return;
+    played = true;
+    var duration = reduceMotion ? 1 : 4200;
+    var startTime = null;
+
+    function easeOutExpo(x) { return x === 1 ? 1 : 1 - Math.pow(2, -10 * x); }
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = easeOutExpo(progress);
+      var current = Math.floor(eased * target);
+      valueEl.textContent = current.toLocaleString('en-US') + '%';
+      fillEl.style.width = Math.min(current, 100) + '%';
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        valueEl.textContent = target.toLocaleString('en-US') + '%';
+        fillEl.style.width = '100%';
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  var meterSection = document.getElementById('meter-section');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        animateMeter();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  observer.observe(meterSection);
+})();
+
+/* ------------------------------------------------------------
+   10) زر القلب الكبير + النافذة المنبثقة
+   ------------------------------------------------------------ */
+(function loveButtonModal() {
+  var btn = document.getElementById('love-btn');
+  var modal = document.getElementById('love-modal');
+  var closeBtn = document.getElementById('modal-close');
+
+  function openModal() {
+    modal.classList.add('show');
+    spawnHeartBurst(reduceMotion ? 30 : 160);
+  }
+  function closeModal() {
+    modal.classList.remove('show');
+  }
+
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+})();
+
+/* ------------------------------------------------------------
+   11) القسم السري — يظهر بعد 5 ضغطات على القلب
+   ------------------------------------------------------------ */
+(function secretSection() {
+  var heartBtn = document.getElementById('secret-heart');
+  var message = document.getElementById('secret-message');
+  var dots = document.querySelectorAll('#secret-progress .secret-dot');
+  var clicks = 0;
+  var revealed = false;
+
+  heartBtn.addEventListener('click', function () {
+    if (revealed) return;
+    clicks++;
+    heartBtn.style.transform = 'scale(1.3)';
+    setTimeout(function () { heartBtn.style.transform = 'scale(1)'; }, 150);
+
+    for (var i = 0; i < dots.length; i++) {
+      if (i < clicks) dots[i].classList.add('filled');
+    }
+
+    if (clicks >= 5) {
+      revealed = true;
+      message.classList.add('revealed');
+      spawnHeartBurst(reduceMotion ? 15 : 60);
+    }
+  });
+})();
+
+/* ------------------------------------------------------------
+   12) مشغل الموسيقى العائم
+   ------------------------------------------------------------ */
+(function musicPlayer() {
+  var audio = document.getElementById('bg-audio');
+  var toggleBtn = document.getElementById('player-toggle');
+  var progressTrack = document.getElementById('player-progress-track');
+  var progressFill = document.getElementById('player-progress-fill');
+  var volumeSlider = document.getElementById('player-volume');
+
+  audio.volume = parseFloat(volumeSlider.value);
+
+  toggleBtn.addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play().catch(function () {
+        /* تشغيل تلقائي قد يُمنع من المتصفح حتى يضغط المستخدم — لا بأس، الزر يدوي بالفعل */
+      });
+      toggleBtn.textContent = '❚❚';
+    } else {
+      audio.pause();
+      toggleBtn.textContent = '▶';
+    }
+  });
+
+  audio.addEventListener('timeupdate', function () {
+    if (audio.duration) {
+      var pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = pct + '%';
+    }
+  });
+
+  audio.addEventListener('ended', function () {
+    toggleBtn.textContent = '▶';
+  });
+
+  progressTrack.addEventListener('click', function (e) {
+    var rect = progressTrack.getBoundingClientRect();
+    var ratio = (e.clientX - rect.left) / rect.width;
+    if (audio.duration) audio.currentTime = ratio * audio.duration;
+  });
+
+  volumeSlider.addEventListener('input', function () {
+    audio.volume = parseFloat(volumeSlider.value);
+  });
+})();
+
+/* ------------------------------------------------------------
+   13) حركة Parallax خفيفة لقلب الـ Hero عند تحريك الماوس
+   ------------------------------------------------------------ */
+(function parallaxHero() {
+  if (reduceMotion) return;
+  var heartWrap = document.querySelector('.hero-heart-wrap');
+  if (!heartWrap) return;
+  window.addEventListener('mousemove', function (e) {
+    var x = (e.clientX / window.innerWidth - 0.5) * 16;
+    var y = (e.clientY / window.innerHeight - 0.5) * 16;
+    heartWrap.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  });
+})();
+</script>
+</body>
+</html>
